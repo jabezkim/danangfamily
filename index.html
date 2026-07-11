@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>다낭·호이안 여행 가이드 및 일정표</title>
+    <style>
+        :root {
+            --primary-color: #1e3c72;
+            --accent-color: #0070f3;
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --border-color: #e1e4e8;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 90px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #ffffff;
+            padding: 25px 20px;
+            text-align: center;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* 공지사항 배너 */
+        .notice-banner {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 12px 15px;
+            margin: 15px;
+            border-radius: 10px;
+            border-left: 5px solid #ffeeba;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .notice-icon {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+        .container {
+            padding: 0 15px 15px 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* 탭 메뉴 */
+        .nav-tabs {
+            display: flex;
+            background-color: #e5e7eb;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            padding: 4px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .tab-btn {
+            flex: 1;
+            border: none;
+            background: none;
+            padding: 10px 10px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .tab-btn.active {
+            background-color: #ffffff;
+            color: #1e3c72;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            border-bottom: 2px solid #f0f2f5;
+            padding-bottom: 8px;
+        }
+
+        .card-title span {
+            margin-right: 8px;
+        }
+
+        .info-badge {
+            background-color: #ebf5ff;
+            color: #0056b3;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        /* 타임라인 */
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 5px;
+            bottom: 5px;
+            width: 2px;
+            background-color: var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -20px;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 0 2px var(--accent-color);
+        }
+
+        .timeline-time {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 2px;
+        }
+
+        .timeline-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .timeline-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 2px;
+            background-color: #f8f9fa;
+            padding: 6px 10px;
+            border-radius: 6px;
+            border-left: 3px solid #ced4da;
+        }
+
+        .map-link {
+            display: inline-block;
+            margin-left: 6px;
+            font-size: 11px;
+            background: #e3f2fd;
+            color: #0056b3;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-decoration: none;
+            vertical-align: middle;
+            font-weight: normal;
+            border: 1px solid #b6d4fe;
+        }
+
+        /* 편집 인디케이터 */
+        .editable-active {
+            border: 1px dashed var(--accent-color) !important;
+            background-color: #f0f8ff !important;
+            padding: 4px !important;
+            border-radius: 4px;
+            outline: none;
+            display: inline-block;
+            min-width: 50px;
+        }
+        div.editable-active { display: block; }
+
+        .add-btn {
+            display: none;
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            background-color: #e9ecef;
+            color: #495057;
+            border: 1px dashed #ced4da;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+        }
+        .delete-btn {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 0;
+            background: #ffe3e3;
+            color: #c92a2a;
+            border: 1px solid #ffa8a8;
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 10px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .todo-list { list-style: none; }
+        .todo-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed var(--border-color);
+            position: relative;
+        }
+        .todo-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+        .todo-item input[type="checkbox"] {
+            margin-top: 4px;
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+        .todo-text { font-size: 14px; width: 100%; padding-right: 30px; }
+        .todo-text strong { color: var(--primary-color); }
+        .todo-text span { display: block; font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+        /* 실시간 계산기 및 가계부 스타일 */
+        .calc-box, .lang-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+        }
+        .calc-input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            margin-bottom: 10px;
+            outline: none;
+        }
+        .calc-result {
+            font-size: 18px;
+            font-weight: 700;
+            color: #d9480f;
+            text-align: right;
+        }
+        
+        /* 가계부 내역 테이블 */
+        .expense-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .expense-table th, .expense-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+            text-align: left;
+        }
+        .expense-table th { background: #e9ecef; color: #495057; }
+        .total-row { font-weight: 700; background: #fff3bf; }
+
+        /* 생존 베트남어 & 큰글씨 카드 */
+        .lang-phrase {
+            font-size: 15px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        .lang-vn {
+            font-size: 20px;
+            color: #e03131;
+            font-weight: 800;
+            margin: 4px 0;
+            background: #fff5f5;
+            padding: 8px;
+            border-radius: 6px;
+            display: inline-block;
+            width: 100%;
+        }
+        .lang-desc { font-size: 12px; color: var(--text-muted); }
+
+        /* 연락처 버튼 */
+        .phone-btn {
+            display: block;
+            background: #e7f5ff;
+            color: #0070f3;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 8px;
+            border: 1px solid #a5d8ff;
+        }
+
+        /* 하단 바 고정 안내 및 버튼 */
+        .floating-action {
+            position: fixed;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 100px);
+            max-width: 400px;
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-size: 13px;
+            z-index: 999;
+        }
+
+        .edit-btn {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            background-color: var(--warning-color);
+            color: #333;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header id="main-header">
+        <h1 class="editable">🇻🇳 다낭·호이안 스마트 일정표</h1>
+        <p class="editable">계룡 출발 ➔ 호이안 ➔ 다낭 호캉스 5박 6일</p>
+    </header>
+
+    <!-- 공지사항 -->
+    <div class="notice-banner" id="notice-container">
+        <span class="notice-icon">📢</span>
+        <div class="editable" id="notice-text" style="width: 100%;">공지사항: 출국 당일인 19일 16시 30분에 계룡에서 차로 출발합니다! 여권 필수 확인!</div>
+    </div>
+
+    <div class="container">
+        <!-- 5개 스마트 탭 메뉴 -->
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="openTab(event, 'itinerary')">📅 상세 일정</button>
+            <button class="tab-btn" onclick="openTab(event, 'checklist')">✅ 사전준비</button>
+            <button class="tab-btn" onclick="openTab(event, 'packing')">🎒 짐싸기</button>
+            <button class="tab-btn" onclick="openTab(event, 'finance')">💱 환율·가계부</button>
+            <button class="tab-btn" onclick="openTab(event, 'survival')">🗣️ 생존 베트남어</button>
+        </div>
+
+        <!-- 탭 1: 상세 일정 -->
+        <div id="itinerary" class="tab-content active">
+            <!-- 1~2일차 -->
+            <div class="card">
+                <div class="card-title"><span contenteditable="false">✈️</span><span class="editable">1~2일차 (7/19~20) 출발 & 호이안</span></div>
+                <div class="info-badge editable">🚗 공항 픽업 차량 예약완료 / 15:00부터 렌트카 7시간 이용</div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">19일 16:30</div>
+                        <div class="timeline-title editable">계룡 출발 (자차 이동)</div>
+                        <div class="timeline-desc editable">인천공항까지 안전운전 이동 (약 3시간 예상)</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">19일 19:30</div>
+                        <div class="timeline-title editable">인천국제공항 도착</div>
+                        <div class="timeline-desc editable">장기주차장 주차, 와이파이 수령 및 출국 수속 진행</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">20일 00:30</div>
+                        <div class="timeline-title editable">비행기 탑승 및 출발</div>
+                        <div class="timeline-desc editable">다낭행 비행기 이륙</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">20일 03:15</div>
+                        <div class="timeline-title editable">다낭 국제공항 도착 <a href="https://maps.google.com/?q=Da+Nang+International+Airport" target="_blank" class="map-link" contenteditable="false">📍지도</a></div>
+                        <div class="timeline-desc editable">입국 심사 및 수하물 수령 진행</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">20일 04:00</div>
+                        <div class="timeline-title editable">픽업 차량 탑승</div>
+                        <div class="timeline-desc editable">예약된 공항 픽업 차량 미팅 후 호텔로 이동</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">20일 04:30</div>
+                        <div class="timeline-title editable">사티아 다낭 체크인 & 취침 <a href="https://maps.google.com/?q=Satya+Da+Nang+Hotel" target="_blank" class="map-link" contenteditable="false">📍지도</a></div>
+                        <div class="timeline-desc editable">05:00 ~ 11:00 취침<br>※ 사티아 조식(06:30~10:00) 일찍 깨면 식사 가능!</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">20일 07:30 / 11:00</div>
+                        <div class="timeline-title editable">한시장 1, 2차 쇼핑 및 환전 <a href="https://maps.google.com/?q=Han+Market+Da+Nang" target="_blank" class="map-link" contenteditable="false">📍지도</a></div>
+                        <div class="timeline-desc editable">07:30 금은방 환전 및 1차 쇼핑 ➔ 11:00~12:00 2차 집중 쇼핑</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">20일 12:30</div>
+                        <div class="timeline-title editable">점심 식사 (택 1)</div>
+                        <div class="timeline-desc editable">
+                            <a href="https://maps.google.com/?q=Nhà+hàng+Ăn+Thôi+Da+Nang" target="_blank" class="map-link" contenteditable="false">📍안토이</a>
+                            <a href="https://maps.google.com/?q=Ran+Pho+Da+Nang" target="_blank" class="map-link" contenteditable="false">📍란조</a>
+                            <a href="https://maps.google.com/?q=Thien+Kim+Restaurant+Da+Nang" target="_blank" class="map-link" contenteditable="false">📍티엔킴</a> 중 한 곳 선택
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">20일 13:30</div>
+                        <div class="timeline-title editable">카페 타임 <a href="https://maps.google.com/?q=Cong+Caphe+Da+Nang" target="_blank" class="map-link" contenteditable="false">📍콩카페</a></div>
+                        <div class="timeline-desc editable">콩카페 또는 주변 예쁜 카페에서 시원한 커피 휴식</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">20일 15:00</div>
+                        <div class="timeline-title editable">사티아 체크아웃 ➔ 호이안 이동</div>
+                        <div class="timeline-desc editable">7시간 렌트카 시작! 사티아 출발 ➔ 호이안 리버타운 이동</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">20일 16:00</div>
+                        <div class="timeline-title editable">리버타운 도착 및 정비 <a href="https://maps.google.com/?q=Hoi+An+Rivertown+Hotel" target="_blank" class="map-link" contenteditable="false">📍지도</a></div>
+                        <div class="timeline-desc editable">체크인 후 가볍게 짐 풀고 잠시 휴식</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">20일 17:00</div>
+                        <div class="timeline-title editable">저녁 식사 (QQ 레스토랑) <a href="https://maps.google.com/?q=QQ+Seafood+Restaurant+Hoi+An" target="_blank" class="map-link" contenteditable="false">📍지도</a></div>
+                        <div class="timeline-desc editable">카카오톡 사전 예약 필수! 맛있는 현지식 해산물 요리</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">20일 18:00 ~ 22:00</div>
+                        <div class="timeline-title editable">호이안 올드타운 & 야시장 투어 
+                            <a href="https://maps.google.com/?q=Hoi+An+Ancient+Town" target="_blank" class="map-link" contenteditable="false">📍올드타운</a>
+                            <a href="https://maps.google.com/?q=Hoi+An+Night+Market" target="_blank" class="map-link" contenteditable="false">📍야시장</a>
+                        </div>
+                        <div class="timeline-desc editable">야경 감상 및 거리 구경 후 렌트카로 숙소 복귀 (22:00 렌트 종료)</div>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addTimelineItem(this)">+ 일정 추가</button>
+            </div>
+
+            <!-- 3일차 -->
+            <div class="card">
+                <div class="card-title"><span contenteditable="false">🌴</span><span class="editable">3일차 (7/21) 호이안 ➔ 다낭 리조트</span></div>
+                <div class="info-badge editable">💡 중요: 푸라마 리조트 도착 시 짐 얼리 체크인 가능 여부 확인!</div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">06:30 ~ 10:00</div>
+                        <div class="timeline-title editable">호텔 조식 및 리조트 휴식</div>
+                        <div class="timeline-desc editable">리버타운 조식 먹고 오전 여유롭게 호캉스</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">11:00</div>
+                        <div class="timeline-title editable">리버타운 체크아웃 및 이동</div>
+                        <div class="timeline-desc editable">호이안에서 다낭 푸라마 리조트로 차량 이동</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">12:30</div>
+                        <div class="timeline-title editable">점심 식사 (미케비치 안토이) <a href="https://maps.google.com/?q=Nhà+hàng+Ăn+Thôi+My+Khe+Da+Nang" target="_blank" class="map-link" contenteditable="false">📍지도</a></div>
+                        <div class="timeline-desc editable">미케비치 분점 안토이 매장에서 깔끔하게 점심 식사</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">14:00</div>
+                        <div class="timeline-title editable">디저트 (핑크망고) <a href="https://maps.google.com/?q=Pink+Mango+Da+Nang" target="_blank" class="map-link" contenteditable="false">📍지도</a></div>
+                        <div class="timeline-desc editable">시원한 망고빙수로 무더위 완벽하게 식히기</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">15:00</div>
+                        <div class="timeline-title editable">푸라마 리조트 공식 체크인 <a href="https://maps.google.com/?q=Furama+Resort+Da+Nang" target="_blank" class="map-link" contenteditable="false">📍지도</a></div>
+                        <div class="timeline-desc editable">배정된 멋진 리조트 룸에 짐 풀기</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">15:00 ~ 18:00</div>
+                        <div class="timeline-title editable">리조트 자유시간 및 휴식</div>
+                        <div class="timeline-desc editable">메인 풀장 수영, 미케비치 해변 산책 등 완전 힐링 휴식</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">19:00</div>
+                        <div class="timeline-title editable">저녁 식사 (배달 앱 활용)</div>
+                        <div class="timeline-desc editable">배달 앱(배달K 등)을 이용해 룸이나 풀장 선베드에서 맛나게 식사</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">20:00 ~</div>
+                        <div class="timeline-title editable">야간 휴식 및 열대과일 야식</div>
+                        <div class="timeline-desc editable">망고, 망고스틴 등 과일 배달시켜서 시원한 음료와 함께 완전 휴식</div>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addTimelineItem(this)">+ 일정 추가</button>
+            </div>
+
+            <!-- 4일차 -->
+            <div class="card">
+                <div class="card-title"><span contenteditable="false">💆</span><span class="editable">4일차 (7/22) 다낭 힐링 플레이 데이</span></div>
+                <div class="info-badge editable">🚗 하루 종일 편하게 움직이는 렌트카 데이</div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">오전</div>
+                        <div class="timeline-title editable">리조트 조식 및 자유 휴양</div>
+                        <div class="timeline-desc editable">푸라마 리조트 조식 이용 (1인 $10 추가) / 오전 수영 및 휴식</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">13:00</div>
+                        <div class="timeline-title editable">점심 식사 (티엔킴)</div>
+                        <div class="timeline-desc editable">고급스럽고 정갈한 베트남 정통 가정식 맛보기</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">14:00</div>
+                        <div class="timeline-title editable">고급 전신 마사지</div>
+                        <div class="timeline-desc editable">가장 더운 낮 시간대에는 시원한 마사지샵에서 스파 힐링</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">16:00</div>
+                        <div class="timeline-title editable">디저트 타임 (핑크망고)</div>
+                        <div class="timeline-desc editable">1일 1망고빙수 필수 실천!</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">18:00</div>
+                        <div class="timeline-title editable">저녁 식사 (안토이 배달)</div>
+                        <div class="timeline-desc editable">리조트로 안토이 음식 배달 주문하여 편안하게 식사 후 휴식</div>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addTimelineItem(this)">+ 일정 추가</button>
+            </div>
+
+            <!-- 5일차 -->
+            <div class="card">
+                <div class="card-title"><span contenteditable="false">🎢</span><span class="editable">5일차 (7/23) 맞춤형 선택 관광</span></div>
+                <div class="info-badge editable">🚗 렌트카 항시 대기 / 당일 컨디션에 따른 유동적 일정</div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">오전</div>
+                        <div class="timeline-title editable">조식 및 리조트 자유 수영</div>
+                        <div class="timeline-desc editable">마지막 리조트 오전 온전히 만끽하기</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">오후</div>
+                        <div class="timeline-title editable">컨디션별 유동적 관광</div>
+                        <div class="timeline-desc editable">🎯 <strong>선택 A:</strong> 바나힐 투어 진행 <a href="https://maps.google.com/?q=Ba+Na+Hills" target="_blank" class="map-link" contenteditable="false">📍지도</a><br>🎯 <strong>선택 B:</strong> 무리하지 않고 다낭 시내 명소 관광 및 리조트 연장 휴식</div>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addTimelineItem(this)">+ 일정 추가</button>
+            </div>
+
+            <!-- 6일차 -->
+            <div class="card">
+                <div class="card-title"><span contenteditable="false">🛍️</span><span class="editable">6일차 (7/24) 알찬 기념품 쇼핑 & 귀국</span></div>
+                <div class="info-badge editable">🚗 렌트카 10시간 대형 이용 (11:00 ~ 21:00) / 대형 짐은 차량 보관</div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">오전</div>
+                        <div class="timeline-title editable">조식 및 레이트 짐 정리</div>
+                        <div class="timeline-desc editable">마지막 리조트 산책 및 체크아웃 준비</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">11:00</div>
+                        <div class="timeline-title editable">푸라마 체크아웃 ➔ 렌트카 탑승</div>
+                        <div class="timeline-desc editable">캐리어 등 모든 무거운 짐은 차량 트렁크에 보관! 맨몸 이동</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">오후</div>
+                        <div class="timeline-title editable">롯데마트 기념품 쇼핑 & 점심 & 마사지 <a href="https://maps.google.com/?q=Lotte+Mart+Da+Nang" target="_blank" class="map-link" contenteditable="false">📍지도</a></div>
+                        <div class="timeline-desc editable">롯데마트에서 커피, 소스, 과자 완벽 쇼핑 및 마지막 마사지</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">18:00 ~ 20:00</div>
+                        <div class="timeline-title editable">마지막 만찬 & 과일/빙수</div>
+                        <div class="timeline-desc editable">한국 가기 전 아쉽지 않게 현지 맛집 저녁 식사 및 망고빙수 먹방</div>
+                    </div>
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable">21:00</div>
+                        <div class="timeline-title editable">다낭 국제공항 도착</div>
+                        <div class="timeline-desc editable">렌트 종료 및 출국 수속 진행, 안전한 귀국 준비!</div>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addTimelineItem(this)">+ 일정 추가</button>
+            </div>
+            <button class="add-btn" onclick="addCardItem('itinerary')" style="background-color:#1e3c72; color:white;">+ 새로운 날짜(카드) 통째로 추가하기</button>
+        </div>
+
+        <!-- 탭 2: 사전준비 -->
+        <div id="checklist" class="tab-content">
+            <div class="card">
+                <div class="card-title"><span>🚨</span><span class="editable">출국 전 사전 필수 체크리스트</span></div>
+                <ul class="todo-list">
+                    <li class="todo-item"><button class="delete-btn" onclick="deleteItem(this)">삭제</button><input type="checkbox"><div class="todo-text editable"><strong>여권 유효기간 확인</strong><span>출발일 기준 유효기간이 6개월 이상 남아있어야 합니다.</span></div></li>
+                    <li class="todo-item"><button class="delete-btn" onclick="deleteItem(this)">삭제</button><input type="checkbox"><div class="todo-text editable"><strong>모바일 항공권 및 호텔 바우처</strong><span>스마트폰에 이미지로 저장하거나 캡처해두기 (사티아, 리버타운, 푸라마)</span></div></li>
+                    <li class="todo-item"><button class="delete-btn" onclick="deleteItem(this)">삭제</button><input type="checkbox"><div class="todo-text editable"><strong>카카오톡 예약 확인 (QQ 레스토랑)</strong><span>20일 17:00 호이안 QQ레스토랑 예약 메시지 재확인</span></div></li>
+                    <li class="todo-item"><button class="delete-btn" onclick="deleteItem(this)">삭제</button><input type="checkbox"><div class="todo-text editable"><strong>해외 이용 카드 & 환전 현금 준비</strong><span>트래블로그/쏠트래블 카드 잔액 충전 및 깨끗한 달러 지폐 준비</span></div></li>
+                    <li class="todo-item"><button class="delete-btn" onclick="deleteItem(this)">삭제</button><input type="checkbox"><div class="todo-text editable"><strong>차량 호출 / 배달 앱 미리 깔기</strong><span>그랩(Grab) 및 배달K(로컬 배달앱) 설치 필수</span></div></li>
+                </ul>
+                <button class="add-btn" onclick="addChecklistItem(this)">+ 체크리스트 항목 추가</button>
+            </div>
+            <div class="card">
+                <div class="card-title"><span>💊</span><span class="editable">베트남 필수 상비약 (물갈이 예방)</span></div>
+                <ul class="todo-list">
+                    <li class="todo-item"><button class="delete-btn" onclick="deleteItem(this)">삭제</button><input type="checkbox"><div class="todo-text editable"><strong>지사제 및 정장제 (★가장 중요)</strong><span>물갈이 대비 급성 지사제 및 백초/스멕타</span></div></li>
+                    <li class="todo-item"><button class="delete-btn" onclick="deleteItem(this)">삭제</button><input type="checkbox"><div class="todo-text editable"><strong>모기 기피제 및 버물리</strong><span>호이안 야시장 강가 야외 활동 필수품</span></div></li>
+                    <li class="todo-item"><button class="delete-btn" onclick="deleteItem(this)">삭제</button><input type="checkbox"><div class="todo-text editable"><strong>소화제 및 종합감기약</strong><span>에어컨 냉방병 대비 종합감기약 필수</span></div></li>
+                </ul>
+                <button class="add-btn" onclick="addChecklistItem(this)">+ 상비약 항목 추가</button>
+            </div>
+        </div>
+
+        <!-- 탭 3: 짐싸기 -->
+        <div id="packing" class="tab-content">
+            <div class="card">
+                <div class="card-title"><span>👜</span><span class="editable">필수 소지품 & 전자기기</span></div>
+                <ul class="todo-list">
+                    <li class="todo-item"><button class="delete-btn" onclick="deleteItem(this)">삭제</button><input type="checkbox"><div class="todo-text editable"><strong>여권 및 지갑</strong> (현금, 신용카드, 신분증)</div></li>
+                    <li class="todo-item"><button class="delete-btn" onclick="deleteItem(this)">삭제</button><input type="checkbox"><div class="todo-text editable"><strong>보조 배터리 & 스마트폰 충전 케이블</strong></div></li>
+                </ul>
+                <button class="add-btn" onclick="addChecklistItem(this)">+ 소지품 추가</button>
+            </div>
+            <div class="card">
+                <div class="card-title"><span>👕</span><span class="editable">의류 & 생활용품</span></div>
+                <ul class="todo-list">
+                    <li class="todo-item"><button class="delete-btn" onclick="deleteItem(this)">삭제</button><input type="checkbox"><div class="todo-text editable"><strong>시원한 여름 의류 및 수영복/래쉬가드</strong></div></li>
+                    <li class="todo-item"><button class="delete-btn" onclick="deleteItem(this)">삭제</button><input type="checkbox"><div class="todo-text editable"><strong>선크림 & 선글라스 & 양산/모자</strong></div></li>
+                    <li class="todo-item"><button class="delete-btn" onclick="deleteItem(this)">삭제</button><input type="checkbox"><div class="todo-text editable"><strong>샤워기 필터</strong> (베트남 호텔 수질 필수템)</div></li>
+                </ul>
+                <button class="add-btn" onclick="addChecklistItem(this)">+ 의류/생활용품 추가</button>
+            </div>
+        </div>
+
+        <!-- 탭 4: 환율 및 가계부 (신규 추가!) -->
+        <div id="finance" class="tab-content">
+            <div class="card">
+                <div class="card-title"><span>💱</span>베트남 동 ➔ 원화 즉시 계산기</div>
+                <div class="calc-box">
+                    <p style="font-size:12px; color:var(--text-muted); margin-bottom:5px;">베트남 동(VND) 금액을 입력하세요 (예: 100000)</p>
+                    <input type="number" id="vnd-input" class="calc-input" placeholder="금액 입력" oninput="quickCalculate()">
+                    <div class="calc-result" id="krw-output">0 원</div>
+                    <p style="font-size:11px; color:#aaa; margin-top:5px; text-align:right;">※ 대략적인 계산 기준 적용 (100,000동 = 약 5,400원)</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title"><span>💰</span>간편 여행 가계부</div>
+                <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">현지에서 쓴 대략적인 지출 내역을 기록하세요.</p>
+                
+                <div style="display:flex; gap:5px; margin-bottom:10px;">
+                    <input type="text" id="exp-name" placeholder="내역 (예: 점심식사)" style="flex:2; padding:8px; border:1px solid #ccc; border-radius:6px; font-size:13px;">
+                    <input type="number" id="exp-amount" placeholder="금액(VND)" style="flex:1.5; padding:8px; border:1px solid #ccc; border-radius:6px; font-size:13px;">
+                    <button onclick="addExpense()" style="flex:1; background:var(--accent-color); color:white; border:none; border-radius:6px; font-weight:bold; cursor:pointer; font-size:13px;">등록</button>
+                </div>
+
+                <table class="expense-table">
+                    <thead>
+                        <tr>
+                            <th>내역</th>
+                            <th>금액 (VND)</th>
+                            <th>삭제</th>
+                        </tr>
+                    </thead>
+                    <tbody id="expense-list">
+                        <!-- 가계부 동적 추가 영역 -->
+                    </tbody>
+                    <tfoot>
+                        <tr class="total-row">
+                            <td>합계</td>
+                            <td id="expense-total">0 VND</td>
+                            <td>-</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <!-- 탭 5: 생존 베트남어 & 기사용 주소 (신규 추가!) -->
+        <div id="survival" class="tab-content">
+            <div class="card">
+                <div class="card-title"><span>🗣️</span>식당/쇼핑 필수 생존 대화</div>
+                
+                <div class="lang-card">
+                    <p class="lang-phrase">🚫 고수는 빼주세요! (폰 화면을 보여주세요)</p>
+                    <p class="lang-vn">Không cho rau mùi</p>
+                    <p class="lang-desc">발음: 콤 쪼 라우 무이</p>
+                </div>
+
+                <div class="lang-card">
+                    <p class="lang-phrase">💵 얼마인가요?</p>
+                    <p class="lang-vn">Bao nhiêu tiền?</p>
+                    <p class="lang-desc">발음: 바오 니에우 띠엔?</p>
+                </div>
+
+                <div class="lang-card">
+                    <p class="lang-phrase">🧾 계산해 주세요.</p>
+                    <p class="lang-vn">Tính tiền</p>
+                    <p class="lang-desc">발음: 띤 띠엔</p>
+                </div>
+
+                <div class="lang-card">
+                    <p class="lang-phrase">❄️ 얼음컵 하나 주세요.</p>
+                    <p class="lang-vn">Cho tôi cốc đá</p>
+                    <p class="lang-desc">발음: 쪼 또이 꼭 다</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title"><span>🚖</span>택시 기사에게 보여줄 호텔 주소</div>
+                
+                <div class="lang-card">
+                    <p class="lang-phrase">🏠 [다낭] 사티아 호텔 주소</p>
+                    <p style="font-size:16px; font-weight:bold; margin-top:5px; color:#1e3c72;">155 Trần Phú, Hải Châu I, Hải Châu, Đà Nẵng</p>
+                </div>
+
+                <div class="lang-card">
+                    <p class="lang-phrase">🏠 [호이안] 리버타운 호텔 주소</p>
+                    <p style="font-size:16px; font-weight:bold; margin-top:5px; color:#1e3c72;">26 Thoại Ngọc Hầu, Cẩm Phô, Hội An</p>
+                </div>
+
+                <div class="lang-card">
+                    <p class="lang-phrase">🏠 [다낭] 푸라마 리조트 주소</p>
+                    <p style="font-size:16px; font-weight:bold; margin-top:5px; color:#1e3c72;">105 Võ Nguyên Giáp, Khuê Mỹ, Ngũ Hành Sơn, Đà Nẵng</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title"><span>🚨</span>현지 비상 연락망 (바로 전화걸기)</div>
+                <p style="font-size:12px; color:var(--text-muted); margin-bottom:5px;">터치하면 바로 전화 통화 화면으로 연결됩니다.</p>
+                <a href="tel:+842363566100" class="phone-btn">📞 주다낭 대한민국 총영사관 영사콜</a>
+                <a href="tel:113" class="phone-btn" style="background:#fff5f5; color:#e03131; border-color:#ffc9c9;">🚨 베트남 현지 경찰서 (113)</a>
+                <a href="tel:115" class="phone-btn" style="background:#fff5f5; color:#e03131; border-color:#ffc9c9;">🚑 베트남 현지 구급차 (115)</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 하단 안내바 -->
+    <div class="floating-action" id="status-msg">
+        💡 나만 수정 가능한 스마트 암호 락(Lock)이 설정되어 있습니다.
+    </div>
+
+    <!-- 수정 토글 버튼 -->
+    <button class="edit-btn" id="editBtn" onclick="toggleEdit()">✏️</button>
+
+    <script>
+        // 1. 탭 전환 기능
+        function openTab(evt, tabName) {
+            let tabcontent = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
+            }
+            let tablinks = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.getElementById(tabName).style.display = "block";
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+            window.scrollTo(0, 0);
+        }
+
+        // 2. 환율 실시간 계산기 (VND -> KRW)
+        function quickCalculate() {
+            const vnd = document.getElementById('vnd-input').value;
+            const krwOutput = document.getElementById('krw-output');
+            if(!vnd) {
+                krwOutput.innerText = "0 원";
+                return;
+            }
+            // 대략적인 계산기 비율 적용 (10,000동 = 540원 수준 -> 0.054)
+            const krw = Math.round(vnd * 0.054);
+            krwOutput.innerText = krw.toLocaleString() + " 원";
+        }
+
+        // 3. 간편 여행 가계부 등록/삭제/합산 기능
+        let expenses = [];
+        function addExpense() {
+            const name = document.getElementById('exp-name').value;
+            const amount = document.getElementById('exp-amount').value;
+            if(!name || !amount) { alert("내역과 금액을 모두 입력하세요."); return; }
+
+            expenses.push({ name: name, amount: parseInt(amount) });
+            document.getElementById('exp-name').value = '';
+            document.getElementById('exp-amount').value = '';
+            
+            renderExpenses();
+            saveFinanceData();
+        }
+
+        function deleteExpense(index) {
+            expenses.splice(index, 1);
+            renderExpenses();
+            saveFinanceData();
+        }
+
+        function renderExpenses() {
+            const list = document.getElementById('expense-list');
+            let total = 0;
+            list.innerHTML = '';
+            
+            expenses.forEach((item, index) => {
+                total += item.amount;
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>${item.amount.toLocaleString()} VND</td>
+                    <td><button onclick="deleteExpense(${index})" style="background:#ffe3e3; color:#c92a2a; border:1px solid #ffa8a8; border-radius:4px; padding:2px 6px; font-size:11px; cursor:pointer;">삭제</button></td>
+                `;
+                list.appendChild(row);
+            });
+            
+            // 원화 환산 텍스트도 함께 표기
+            const krwTotal = Math.round(total * 0.054);
+            document.getElementById('expense-total').innerHTML = `${total.toLocaleString()} VND <br><span style='font-size:12px; color:var(--text-muted);'>(약 ${krwTotal.toLocaleString()}원)</span>`;
+        }
+
+        function saveFinanceData() {
+            localStorage.setItem('danang_expenses_v5', JSON.stringify(expenses));
+        }
+
+        // 4. 일정 항목 추가 기능
+        function addTimelineItem(btn) {
+            const timeline = btn.previousElementSibling;
+            const newItem = document.createElement('div');
+            newItem.className = 'timeline-item';
+            newItem.innerHTML = `
+                <button class="delete-btn" onclick="deleteItem(this)" style="display:block;">삭제</button>
+                <div class="timeline-dot"></div>
+                <div class="timeline-time editable editable-active" contenteditable="true">시간 입력</div>
+                <div class="timeline-title editable editable-active" contenteditable="true">일정 제목 입력</div>
+                <div class="timeline-desc editable editable-active" contenteditable="true">상세 내용 입력</div>
+            `;
+            timeline.appendChild(newItem);
+        }
+
+        // 5. 체크리스트 항목 추가 기능
+        function addChecklistItem(btn) {
+            const list = btn.previousElementSibling;
+            const newItem = document.createElement('li');
+            newItem.className = 'todo-item';
+            newItem.innerHTML = `
+                <button class="delete-btn" onclick="deleteItem(this)" style="display:block;">삭제</button>
+                <input type="checkbox">
+                <div class="todo-text editable editable-active" contenteditable="true">
+                    <strong>새 준비물</strong>
+                    <span>설명 입력</span>
+                </div>
+            `;
+            list.appendChild(newItem);
+        }
+
+        // 6. 새로운 카드 통째로 추가 기능
+        function addCardItem(containerId) {
+            const container = document.getElementById(containerId);
+            const newCard = document.createElement('div');
+            newCard.className = 'card';
+            newCard.innerHTML = `
+                <div class="card-title"><span contenteditable="false">📌</span><span class="editable editable-active" contenteditable="true">새로운 타이틀 입력</span></div>
+                <div class="info-badge editable editable-active" contenteditable="true">메모 입력</div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <button class="delete-btn" onclick="deleteItem(this)" style="display:block;">삭제</button>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time editable editable-active" contenteditable="true">시간</div>
+                        <div class="timeline-title editable editable-active" contenteditable="true">일정 제목</div>
+                        <div class="timeline-desc editable editable-active" contenteditable="true">내용</div>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addTimelineItem(this)" style="display:block;">+ 일정 추가</button>
+                <button class="add-btn" onclick="deleteItem(this)" style="display:block; background-color:#ffe3e3; color:#c92a2a; margin-top:5px;">- 이 카드 전체 삭제</button>
+            `;
+            container.insertBefore(newCard, container.lastElementChild);
+        }
+
+        // 7. 항목 삭제 기능
+        function deleteItem(btn) {
+            if(confirm("정말 이 항목을 삭제하시겠습니까?")) {
+                btn.parentElement.remove();
+            }
+        }
+
+        // 8. ★ 나만 수정 가능한 비밀번호 연동 락 기능 ★
+        let isEditing = false;
+        const SECRET_PASSWORD = "0719"; // 본인만 알 수 있는 출발일 비밀번호!
+
+        function toggleEdit() {
+            const btn = document.getElementById('editBtn');
+            const statusMsg = document.getElementById('status-msg');
+            
+            if (!isEditing) {
+                // 편집모드로 진입하려고 할 때 비밀번호 검증
+                let pw = prompt("🔐 나만 가능한 일정 편집 모드입니다.\n비밀번호를 입력하세요 (기본 비밀번호: 출발일 4자리):");
+                if (pw !== SECRET_PASSWORD) {
+                    alert("❌ 비밀번호가 올바르지 않습니다. 편집 권한이 없습니다.");
+                    return;
+                }
+                
+                // 편집 모드 활성화 (나머지 가족들은 보기만 가능)
+                document.querySelectorAll('.editable').forEach(el => {
+                    el.contentEditable = "true";
+                    el.classList.add('editable-active');
+                });
+                document.querySelectorAll('.add-btn').forEach(el => el.style.display = "block");
+                document.querySelectorAll('.delete-btn').forEach(el => el.style.display = "block");
+                
+                btn.innerHTML = "💾";
+                statusMsg.innerHTML = "📝 편집 잠금이 해제되었습니다! 자유롭게 수정 후 완료되면 저장(💾)을 누르세요.";
+                statusMsg.style.backgroundColor = "#ffc107";
+                statusMsg.style.color = "#333";
+                isEditing = true;
+            } else {
+                // 편집 모드 종료 및 저장
+                document.querySelectorAll('.editable').forEach(el => {
+                    el.contentEditable = "false";
+                    el.classList.remove('editable-active');
+                });
+                document.querySelectorAll('.add-btn').forEach(el => el.style.display = "none");
+                document.querySelectorAll('.delete-btn').forEach(el => el.style.display = "none");
+                
+                // localStorage에 HTML 레이아웃 완벽 동적 저장
+                localStorage.setItem('danang_header_v5', document.getElementById('main-header').innerHTML);
+                localStorage.setItem('danang_notice_v5', document.getElementById('notice-container').innerHTML);
+                localStorage.setItem('danang_itinerary_v5', document.getElementById('itinerary').innerHTML);
+                localStorage.setItem('danang_checklist_v5', document.getElementById('checklist').innerHTML);
+                localStorage.setItem('danang_packing_v5', document.getElementById('packing').innerHTML);
+
+                btn.innerHTML = "✏️";
+                statusMsg.innerHTML = "🔒 일정이 스마트 안전 잠금 상태로 저장되었습니다.";
+                statusMsg.style.backgroundColor = "#28a745";
+                statusMsg.style.color = "white";
+                isEditing = false;
+                
+                setTimeout(() => {
+                    statusMsg.innerHTML = "💡 우측 하단 연필(✏️) 버튼을 눌러 일정을 수정/추가하세요!";
+                    statusMsg.style.backgroundColor = "var(--primary-color)";
+                }, 3000);
+            }
+        }
+
+        // 9. 체크박스 상태 변동 감지 및 즉시 자동 저장
+        document.addEventListener('change', function(e) {
+            if(e.target.type === 'checkbox') {
+                if(e.target.checked) e.target.setAttribute('checked', 'checked');
+                else e.target.removeAttribute('checked');
+                
+                if(!isEditing) {
+                    localStorage.setItem('danang_checklist_v5', document.getElementById('checklist').innerHTML);
+                    localStorage.setItem('danang_packing_v5', document.getElementById('packing').innerHTML);
+                }
+            }
+        });
+
+        // 10. 페이지 로드 시 로컬 데이터 복구
+        window.onload = function() {
+            // 가계부 데이터 복구
+            const savedFinance = localStorage.getItem('danang_expenses_v5');
+            if (savedFinance) {
+                expenses = JSON.parse(savedFinance);
+                renderExpenses();
+            }
+
+            // 일정 및 체크리스트 HTML 복구
+            if(localStorage.getItem('danang_itinerary_v5')) {
+                document.getElementById('main-header').innerHTML = localStorage.getItem('danang_header_v5');
+                document.getElementById('notice-container').innerHTML = localStorage.getItem('danang_notice_v5');
+                document.getElementById('itinerary').innerHTML = localStorage.getItem('danang_itinerary_v5');
+                document.getElementById('checklist').innerHTML = localStorage.getItem('danang_checklist_v5');
+                document.getElementById('packing').innerHTML = localStorage.getItem('danang_packing_v5');
+                
+                // 불러오기 완료 후 초기화 (편집 버튼들 가리기)
+                document.querySelectorAll('.add-btn, .delete-btn').forEach(el => el.style.display = "none");
+                document.querySelectorAll('.editable').forEach(el => {
+                    el.contentEditable = "false";
+                    el.classList.remove('editable-active');
+                });
+            }
+        }
+    </script>
+</body>
+</html>
